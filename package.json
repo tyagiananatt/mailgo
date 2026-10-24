@@ -1,0 +1,23 @@
+{
+  "name": "reachinbox-email-scheduler-monorepo",
+  "version": "1.0.0",
+  "description": "Production-grade Email Scheduler and Dashboard for ReachInbox",
+  "scripts": {
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "seed": "npm run seed --prefix backend",
+    "clean": "npm run clean --prefix backend",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend"
+  },
+  "keywords": [
+    "reachinbox",
+    "bullmq",
+    "redis",
+    "email-scheduler",
+    "ethereal-email",
+    "react",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC"
+}

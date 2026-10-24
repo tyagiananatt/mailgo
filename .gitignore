@@ -1,0 +1,51 @@
+# Personal study documentation (excluded per request)
+docs/
+
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment Variables & Secrets (NEVER commit credentials!)
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+!*.env.example
+
+# Build Artifacts
+dist/
+backend/dist/
+frontend/dist/
+build/
+*.tsbuildinfo
+
+# SQLite Database & Storage
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/prisma/*.db
+backend/prisma/*.db-journal
+dump.rdb
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary directories
+.agents/
+.system_generated/

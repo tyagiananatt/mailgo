@@ -1,0 +1,81 @@
+// Prisma schema for ReachInbox Email Scheduler
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String            @id @default(cuid())
+  email            String            @unique
+  name             String
+  avatar           String?
+  googleId         String?           @unique
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  slackIntegration SlackIntegration?
+}
+
+model SenderAccount {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  emails    Email[]
+}
+
+model Email {
+  id             String         @id @default(cuid())
+  senderId       String
+  sender         SenderAccount  @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  senderEmail    String
+  recipientEmail String
+  recipientName  String?
+  subject        String
+  body           String
+  status         String         @default("SCHEDULED") // "SCHEDULED", "SENT", "FAILED", "CANCELLED"
+  scheduledAt    DateTime
+  sentAt         DateTime?
+  delaySeconds   Int            @default(2)
+  hourlyLimit    Int            @default(100)
+  messageId      String?
+  previewUrl     String?
+  errorMessage   String?
+  retryCount     Int            @default(0)
+  metadata       String?        // JSON string for attachments or custom tags
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([status])
+  @@index([scheduledAt])
+  @@index([senderEmail])
+}
+
+model SlackIntegration {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  webhookUrl  String?
+  accessToken String?
+  channel     String?
+  isConnected Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
+}
+
+model RateLimitLog {
+  id           String   @id @default(cuid())
+  senderEmail  String
+  hourWindow   String   // e.g. "2026-10-24T01"
+  count        Int      @default(0)
+  alertedSlack Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([senderEmail, hourWindow])
+}
