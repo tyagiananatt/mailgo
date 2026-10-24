@@ -99,9 +99,10 @@ export async function getGoogleAuthUrl(req: Request, res: Response) {
 
 export async function handleGoogleCallback(req: Request, res: Response) {
   const { code } = req.query;
+  const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
 
   if (!code) {
-    return res.redirect('http://localhost:3000/login?error=missing_code');
+    return res.redirect(`${frontendUrl}/login?error=missing_code`);
   }
 
   try {
@@ -156,10 +157,10 @@ export async function handleGoogleCallback(req: Request, res: Response) {
       },
     });
 
-    return res.redirect(`http://localhost:3000/?logged_in=true&email=${encodeURIComponent(user.email)}`);
+    return res.redirect(`${frontendUrl}/?logged_in=true&email=${encodeURIComponent(user.email)}`);
   } catch (err: any) {
     console.error('❌ Error handling Google callback:', err);
-    return res.redirect('http://localhost:3000/login?error=google_auth_failed');
+    return res.redirect(`${frontendUrl}/login?error=google_auth_failed`);
   }
 }
 
