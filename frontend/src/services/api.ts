@@ -8,8 +8,15 @@ import {
   SlackStatus,
 } from '../types';
 
+const rawBaseURL = import.meta.env.VITE_API_URL;
+const baseURL = rawBaseURL
+  ? rawBaseURL.endsWith('/api')
+    ? rawBaseURL
+    : `${rawBaseURL.replace(/\/$/, '')}/api`
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
