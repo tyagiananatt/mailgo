@@ -8,12 +8,17 @@ import {
   SlackStatus,
 } from '../types';
 
-const rawBaseURL = import.meta.env.VITE_API_URL;
-const baseURL = rawBaseURL
-  ? rawBaseURL.endsWith('/api')
-    ? rawBaseURL
-    : `${rawBaseURL.replace(/\/$/, '')}/api`
-  : '/api';
+const isLocal =
+  typeof window !== 'undefined' &&
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+const rawBaseURL =
+  import.meta.env.VITE_API_URL ||
+  (isLocal ? '/api' : 'https://mailgo-backend.onrender.com/api');
+
+const baseURL = rawBaseURL.endsWith('/api')
+  ? rawBaseURL
+  : `${rawBaseURL.replace(/\/$/, '')}/api`;
 
 const api = axios.create({
   baseURL,

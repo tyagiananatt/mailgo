@@ -49,7 +49,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
       }
     } catch (err: any) {
       console.error('Google login error:', err);
-      setErrorMessage('Google authentication is not available. Please log in using your email address.');
+      const apiMsg = err.response?.data?.message || err.response?.data?.error || err.message;
+      setErrorMessage(`Google authentication error: ${apiMsg}`);
     } finally {
       setIsLoading(false);
     }
