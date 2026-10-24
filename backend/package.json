@@ -7,7 +7,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "render:build": "npm install && npx prisma generate && npx prisma db push && npm run build",
+    "postinstall": "prisma generate",
+    "render:build": "npm install --include=dev && npx prisma db push && npm run build",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
@@ -19,6 +20,11 @@
     "@bull-board/express": "^6.7.13",
     "@elastic/elasticsearch": "^8.17.0",
     "@prisma/client": "^5.22.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.13.4",
+    "@types/nodemailer": "^6.4.17",
     "axios": "^1.7.9",
     "bullmq": "^5.41.6",
     "cors": "^2.8.5",
@@ -27,16 +33,11 @@
     "ioredis": "^5.4.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
+    "prisma": "^5.22.0",
+    "typescript": "^5.7.3",
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
-    "@types/multer": "^1.4.12",
-    "@types/node": "^22.13.4",
-    "@types/nodemailer": "^6.4.17",
-    "prisma": "^5.22.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.7.3"
+    "tsx": "^4.19.3"
   }
 }

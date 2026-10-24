@@ -35,7 +35,7 @@ createBullBoard({
 app.use('/admin/queues', serverAdapter.getRouter());
 
 // 2. Health & Status Check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: express.Request, res: express.Response) => {
   res.json({
     status: 'ok',
     service: 'reachinbox-email-scheduler',

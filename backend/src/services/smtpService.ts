@@ -46,7 +46,7 @@ export async function getTransporter(): Promise<Transporter> {
   // Attempt to generate a new test account with a 4s timeout
   console.log('🔄 Attempting to create dynamic Ethereal Email test account...');
   try {
-    const testAccount = await timeoutPromise(nodemailer.createTestAccount(), 4000);
+    const testAccount: any = await timeoutPromise(nodemailer.createTestAccount(), 4000);
     currentAccount = { user: testAccount.user, pass: testAccount.pass };
     transporterInstance = nodemailer.createTransport({
       host: testAccount.smtp.host,
@@ -98,7 +98,7 @@ export async function sendMail(options: SendMailOptions): Promise<SendMailResult
   };
 
   try {
-    const info = await timeoutPromise(transporter.sendMail(emailPayload), 5000);
+    const info: any = await timeoutPromise(transporter.sendMail(emailPayload), 5000);
     const messageId = info.messageId || `<${Date.now()}.${Math.random().toString(36).substring(2)}@ethereal.email>`;
     const testUrl = nodemailer.getTestMessageUrl(info);
     const previewUrl = testUrl || `https://ethereal.email/message/${messageId.replace(/[<>]/g, '')}`;

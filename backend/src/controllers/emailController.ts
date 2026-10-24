@@ -128,7 +128,7 @@ export async function parseCsvLeads(req: Request, res: Response) {
     const matches = content.match(emailRegex) || [];
 
     // Deduplicate emails
-    const uniqueEmails = Array.from(new Set(matches.map((e) => e.toLowerCase().trim())));
+    const uniqueEmails = Array.from(new Set(matches.map((e: string) => e.toLowerCase().trim())));
 
     return res.json({
       success: true,
